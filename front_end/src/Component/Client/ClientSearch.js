@@ -27,156 +27,27 @@ const Card = styled.div`
 `;
 
 export default function SearchForm() {
-    const [one, two] = useState([]);
+    const [data, setData] = useState([]);
 
-    const [three, four] = useState("");
+    const [query, setQuery] = useState("");
     useEffect(() => {
         axios
             .get("https://rickandmortyapi.com/api/character/")
             .then(response => {
-                console.log(response);
-                const fitnessClassName = response.data.results.filter(
-                    fitnessClass =>
-                        fitnessClass.name
-                            .toLowerCase()
-                            .includes(three.toLowerCase())
-                );
-                two(fitnessClassName);
+                console.log(response.data.results);
+                setData(response.data.results);
             });
-    }, [three]);
-    const handleChangeName = event => {
-        four(event.target.value);
+    }, [query]);
+    const handleChange = event => {
+        setQuery(event.target.value);
     };
-
-    const [five, six] = useState([]);
-
-    const [seven, eight] = useState("");
-    useEffect(() => {
-        axios
-            .get("https://rickandmortyapi.com/api/character/")
-            .then(response => {
-                console.log(response);
-                const fitnessClassStatus = response.data.results.filter(
-                    fitnessClass =>
-                        fitnessClass.status
-                            .toLowerCase()
-                            .includes(seven.toLowerCase())
-                );
-                six(fitnessClassStatus);
-            });
-    }, [seven]);
-    const handleChangeStatus = event => {
-        eight(event.target.value);
-    };
-    const [nine, ten] = useState([]);
-
-    const [eleven, twelve] = useState("");
-    useEffect(() => {
-        axios
-            .get("https://rickandmortyapi.com/api/character/")
-            .then(response => {
-                console.log(response);
-                const fitnessClassSpecies = response.data.results.filter(
-                    fitnessClass =>
-                        fitnessClass.species
-                            .toLowerCase()
-                            .includes(eleven.toLowerCase())
-                );
-                ten(fitnessClassSpecies);
-            });
-    }, [eleven]);
-    const handleChangeSpecies = event => {
-        twelve(event.target.value);
-    };
-    const [thirteen, fourteen] = useState([]);
-
-    const [fifteen, sixteen] = useState("");
-    useEffect(() => {
-        axios
-            .get("https://rickandmortyapi.com/api/character/")
-            .then(response => {
-                console.log(response);
-                const fitnessClassGender = response.data.results.filter(
-                    fitnessClass =>
-                        fitnessClass.gender
-                            .toLowerCase()
-                            .includes(fifteen.toLowerCase())
-                );
-                fourteen(fitnessClassGender);
-            });
-    }, [fifteen]);
-    const handleChangeGender = event => {
-        sixteen(event.target.value);
-    };
-
-    const [seventeen, eightteen] = useState([]);
-
-    const [nineteen, twenty] = useState("");
-    useEffect(() => {
-        axios
-            .get("https://rickandmortyapi.com/api/character/")
-            .then(response => {
-                console.log(response);
-                const fitnessClassNameName = response.data.results.filter(
-                    fitnessClass =>
-                        fitnessClass.name
-                            .toLowerCase()
-                            .includes(nineteen.toLowerCase())
-                );
-                eightteen(fitnessClassNameName);
-            });
-    }, [nineteen]);
-    const handleChangeNameName = event => {
-        twenty(event.target.value);
-    };
-    const [twentyone, twentytwo] = useState([]);
-
-    const [twentythree, twentyfour] = useState("");
-    useEffect(() => {
-        axios
-            .get("https://rickandmortyapi.com/api/character/")
-            .then(response => {
-                console.log(response);
-                const fitnessClassStatusStatus = response.data.results.filter(
-                    fitnessClass =>
-                        fitnessClass.status
-                            .toLowerCase()
-                            .includes(twentythree.toLowerCase())
-                );
-                twentytwo(fitnessClassStatusStatus);
-            });
-    }, [twentythree]);
-    const handleChangeStatusStatus = event => {
-        twentyfour(event.target.value);
-    };
-    const [twentyfive, twentysix] = useState([]);
-
-    const [twentyseven, twentyeight] = useState("");
-    useEffect(() => {
-        axios
-            .get("https://rickandmortyapi.com/api/character/")
-            .then(response => {
-                console.log(response);
-                const fitnessClassSpeciesSpecies = response.data.results.filter(
-                    fitnessClass =>
-                        fitnessClass.species
-                            .toLowerCase()
-                            .includes(twentyseven.toLowerCase())
-                );
-                twentysix(fitnessClassSpeciesSpecies);
-            });
-    }, [twentyseven]);
-    const handleChangeSpeciesSpecies = event => {
-        twentyeight(event.target.value);
-    };
-
     return (
         <section className="search-form">
             <Search>
                 <input
                     type="text"
-                    onChange={handleChangeName}
-                    value={three}
+                    onChange={handleChange}
+                    value={query}
                     name="name"
                     tabIndex="0"
                     className="prompt search-name"
@@ -186,22 +57,30 @@ export default function SearchForm() {
             </Search>
 
             <SearchResults>
-                {one.map(data => {
-                    return (
-                        <Card key={data.index}>
-                            <h2>{data.name}</h2>
-                            <h3>Status:{data.status}</h3>
-                            <h3>Species:{data.species}</h3>
-                            <h3>Gender:{data.gender}</h3>
-                        </Card>
-                    );
-                })}
+                {query.length
+                    ? data
+                          .filter(fitnessClass =>
+                              fitnessClass.name
+                                  .toLowerCase()
+                                  .includes(query.toLowerCase())
+                          )
+                          .map(data => {
+                              return (
+                                  <Card key={data.index}>
+                                      <h2>{data.name}</h2>
+                                      <h3>Status:{data.status}</h3>
+                                      <h3>Species:{data.species}</h3>
+                                      <h3>Gender:{data.gender}</h3>
+                                  </Card>
+                              );
+                          })
+                    : null}
             </SearchResults>
             <Search>
                 <input
                     type="text"
-                    onChange={handleChangeStatus}
-                    value={seven}
+                    onChange={handleChange}
+                    value={query}
                     name="status"
                     tabIndex="0"
                     className="prompt search-status"
@@ -211,142 +90,190 @@ export default function SearchForm() {
             </Search>
 
             <SearchResults>
-                {five.map(data => {
-                    return (
-                        <Card key={data.index}>
-                            <h2>{data.name}</h2>
-                            <h3>Status:{data.status}</h3>
-                            <h3>Species:{data.species}</h3>
-                            <h3>Gender:{data.gender}</h3>
-                        </Card>
-                    );
-                })}
+                {query.length
+                    ? data
+                          .filter(fitnessClass =>
+                              fitnessClass.status
+                                  .toLowerCase()
+                                  .includes(query.toLowerCase())
+                          )
+                          .map(data => {
+                              return (
+                                  <Card key={data.index}>
+                                      <h2>{data.name}</h2>
+                                      <h3>Status:{data.status}</h3>
+                                      <h3>Species:{data.species}</h3>
+                                      <h3>Gender:{data.gender}</h3>
+                                  </Card>
+                              );
+                          })
+                    : null}
             </SearchResults>
-            <Search>
+            {/* <Search>
                 <input
                     type="text"
-                    onChange={handleChangeSpecies}
-                    value={eleven}
-                    name="species"
+                    onChange={handleChange}
+                    value={query}
+                    name="date"
                     tabIndex="0"
-                    className="prompt search-species"
-                    placeholder="Search By Species"
+                    className="prompt search-date"
+                    placeholder="Search By Date"
                     autoComplete="off"
                 />
             </Search>
 
             <SearchResults>
-                {nine.map(data => {
-                    return (
-                        <Card key={data.index}>
-                            <h2>{data.name}</h2>
-                            <h3>Status:{data.status}</h3>
-                            <h3>Species:{data.species}</h3>
-                            <h3>Gender:{data.gender}</h3>
-                        </Card>
-                    );
-                })}
+                {query.length
+                    ? data
+                          .filter(fitnessClass =>
+                              fitnessClass.date
+                                  .toLowerCase()
+                                  .includes(query.toLowerCase())
+                          )
+                          .map(data => {
+                              return (
+                                  <Card key={data.index}>
+                                      <h2>{data.name}</h2>
+                                      <h3>Status:{data.status}</h3>
+                                      <h3>Species:{data.species}</h3>
+                                      <h3>Gender:{data.gender}</h3>
+                                  </Card>
+                              );
+                          })
+                    : null}
             </SearchResults>
             <Search>
                 <input
                     type="text"
-                    onChange={handleChangeGender}
-                    value={fifteen}
-                    name="gender"
+                    onChange={handleChange}
+                    value={query}
+                    name="duration"
                     tabIndex="0"
-                    className="prompt search-Gender"
-                    placeholder="Search By Gender"
+                    className="prompt search-duration"
+                    placeholder="Search By Duration"
                     autoComplete="off"
                 />
             </Search>
 
             <SearchResults>
-                {thirteen.map(data => {
-                    return (
-                        <Card key={data.index}>
-                            <h2>{data.name}</h2>
-                            <h3>Status:{data.status}</h3>
-                            <h3>Species:{data.species}</h3>
-                            <h3>Gender:{data.gender}</h3>
-                        </Card>
-                    );
-                })}
+                {query.length
+                    ? data
+                          .filter(fitnessClass =>
+                              fitnessClass.duration
+                                  .toLowerCase()
+                                  .includes(query.toLowerCase())
+                          )
+                          .map(data => {
+                              return (
+                                  <Card key={data.index}>
+                                      <h2>{data.name}</h2>
+                                      <h3>Status:{data.status}</h3>
+                                      <h3>Species:{data.species}</h3>
+                                      <h3>Gender:{data.gender}</h3>
+                                  </Card>
+                              );
+                          })
+                    : null}
             </SearchResults>
             <Search>
                 <input
                     type="text"
-                    onChange={handleChangeNameName}
-                    value={nineteen}
-                    name="name"
+                    onChange={handleChange}
+                    value={query}
+                    name="type"
                     tabIndex="0"
-                    className="prompt search-name-name"
-                    placeholder="Search By Name Name"
+                    className="prompt search-type"
+                    placeholder="Search By Type"
                     autoComplete="off"
                 />
             </Search>
 
             <SearchResults>
-                {seventeen.map(data => {
-                    return (
-                        <Card key={data.index}>
-                            <h2>{data.name}</h2>
-                            <h3>Status:{data.status}</h3>
-                            <h3>Species:{data.species}</h3>
-                            <h3>Gender:{data.gender}</h3>
-                        </Card>
-                    );
-                })}
+                {query.length
+                    ? data
+                          .filter(fitnessClass =>
+                              fitnessClass.type
+                                  .toLowerCase()
+                                  .includes(query.toLowerCase())
+                          )
+                          .map(data => {
+                              return (
+                                  <Card key={data.index}>
+                                      <h2>{data.name}</h2>
+                                      <h3>Status:{data.status}</h3>
+                                      <h3>Species:{data.species}</h3>
+                                      <h3>Gender:{data.gender}</h3>
+                                  </Card>
+                              );
+                          })
+                    : null}
             </SearchResults>
             <Search>
                 <input
                     type="text"
-                    onChange={handleChangeStatusStatus}
-                    value={twentythree}
-                    name="status"
+                    onChange={handleChange}
+                    value={query}
+                    name="intensityLevel"
                     tabIndex="0"
-                    className="prompt search-status-status"
-                    placeholder="Search By Status Status"
+                    className="prompt search-intensityLevel"
+                    placeholder="Search By Intensity Level"
                     autoComplete="off"
                 />
             </Search>
 
             <SearchResults>
-                {twentyone.map(data => {
-                    return (
-                        <Card key={data.index}>
-                            <h2>{data.name}</h2>
-                            <h3>Status:{data.status}</h3>
-                            <h3>Species:{data.species}</h3>
-                            <h3>Gender:{data.gender}</h3>
-                        </Card>
-                    );
-                })}
+                {query.length
+                    ? data
+                          .filter(fitnessClass =>
+                              fitnessClass.intensityLevel
+                                  .toLowerCase()
+                                  .includes(query.toLowerCase())
+                          )
+                          .map(data => {
+                              return (
+                                  <Card key={data.index}>
+                                      <h2>{data.name}</h2>
+                                      <h3>Status:{data.status}</h3>
+                                      <h3>Species:{data.species}</h3>
+                                      <h3>Gender:{data.gender}</h3>
+                                  </Card>
+                              );
+                          })
+                    : null}
             </SearchResults>
             <Search>
                 <input
                     type="text"
-                    onChange={handleChangeSpeciesSpecies}
-                    value={twentyseven}
-                    name="species"
+                    onChange={handleChange}
+                    value={query}
+                    name="location"
                     tabIndex="0"
-                    className="prompt search-species-species"
-                    placeholder="Search By Species Species"
+                    className="prompt search-location"
+                    placeholder="Search By Location"
                     autoComplete="off"
                 />
             </Search>
 
             <SearchResults>
-                {twentyfive.map(data => {
-                    return (
-                        <Card key={data.index}>
-                            <h2>{data.name}</h2>
-                            <h3>Status:{data.status}</h3>
-                            <h3>Species:{data.species}</h3>
-                            <h3>Gender:{data.gender}</h3>
-                        </Card>
-                    );
-                })}
-            </SearchResults>
+                {query.length
+                    ? data
+                          .filter(fitnessClass =>
+                              fitnessClass.location
+                                  .toLowerCase()
+                                  .includes(query.toLowerCase())
+                          )
+                          .map(data => {
+                              return (
+                                  <Card key={data.index}>
+                                      <h2>{data.name}</h2>
+                                      <h3>Status:{data.status}</h3>
+                                      <h3>Species:{data.species}</h3>
+                                      <h3>Gender:{data.gender}</h3>
+                                  </Card>
+                              );
+                          })
+                    : null}
+            </SearchResults> */}
         </section>
     );
 }
