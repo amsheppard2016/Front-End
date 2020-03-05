@@ -1,58 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import styled from "styled-components";
-
-const Search = styled.form`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 1.5%;
-`;
-
-const SearchBars = styled.div`
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-`;
-
-const SearchResults = styled.section`
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-`;
-const Card = styled.div`
-    background: #dec0f1;
-    width: 20%;
-    border: solid 6px #957fef;
-    margin: 1%;
-    padding: 2%;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    text-align: center;
-    justify-content: center;
-
-    & h2 {
-        margin-top: 2%;
-        margin-bottom: 2%;
-    }
-    & h3 {
-        margin-top: 2%;
-        margin-bottom: 1%;
-    }
-`;
-
-const Input = styled.input`
-    box-sizing: border-box;
-    font-size: 14px;
-    padding: 10px;
-    border-radius: 3px;
-    border: none;
-    box-shadow: inset 0 0 0 3px #b79ced;
-    width: 100%;
-    outline: none;
-    transition: all 200ms;
-`;
+import { Search, SearchBars, SearchResults, Card, Input } from "./Styles";
 
 export default function SearchForm() {
     const [data, setData] = useState([]);

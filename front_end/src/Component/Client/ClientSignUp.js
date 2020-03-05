@@ -1,38 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Form, Field, withFormik } from "formik";
+import { withFormik } from "formik";
 import * as Yup from "yup";
-import styled from "styled-components";
-
-const Button = styled.button`
-    box-shadow: 0px 1px 0px 0px #f0f7fa;
-    background: linear-gradient(
-        180deg,
-        rgba(183, 156, 237, 1) 0%,
-        rgba(116, 99, 185, 1) 60%
-    );
-    background-color: rgb(183, 156, 237);
-    border-radius: 6px;
-    border: 1px solid #7161ef;
-    display: inline-block;
-    cursor: pointer;
-    color: #ffffff;
-    font-family: Arial;
-    font-size: 15px;
-    font-weight: bold;
-    padding: 6px 24px;
-    text-decoration: none;
-    text-shadow: 0px -1px 0px #5b6178;
-
-    &:hover {
-        background: linear-gradient(
-            180deg,
-            rgba(116, 99, 185, 1) 0%,
-            rgba(183, 156, 237, 1) 60%
-        );
-        background-color: rgb(183, 156, 237);
-    }
-`;
+import { ClientSection, ClientForm, Button, FieldInput } from "./Styles";
 
 const UserForm = ({ values, errors, touched, status }) => {
     const [users, setUsers] = useState([]);
@@ -42,27 +12,27 @@ const UserForm = ({ values, errors, touched, status }) => {
     }, [status]);
 
     return (
-        <section className="form">
-            <Form>
+        <ClientSection>
+            <ClientForm>
                 <label htmlFor="user-name">Name:</label>
-                <Field id="name" type="text" name="name" />
+                <FieldInput id="name" type="text" name="name" />
                 {touched.name && errors.name && (
                     <p className="errors">{errors.name}</p>
                 )}
 
                 <br />
                 <label htmlFor="user-email">Email:</label>
-                <Field id="email" type="email" name="email" />
+                <FieldInput id="email" type="email" name="email" />
                 {errors.email && touched.email && <div>{errors.email}</div>}
                 <br />
                 <label htmlFor="user-username">Username:</label>
-                <Field id="username" type="text" name="username" />
+                <FieldInput id="username" type="text" name="username" />
                 {touched.username && errors.username && (
                     <p className="errors">{errors.username}</p>
                 )}
                 <br />
                 <label htmlFor="user-password">Password: </label>
-                <Field id="password" type="password" name="password" />
+                <FieldInput id="password" type="password" name="password" />
                 {errors.password && touched.password && (
                     <div>{errors.password}</div>
                 )}
@@ -70,7 +40,7 @@ const UserForm = ({ values, errors, touched, status }) => {
                 <label htmlFor="user-password-confirmation">
                     Password Confirmation:
                 </label>
-                <Field
+                <FieldInput
                     id="passwordConfirmation"
                     type="password"
                     name="passwordConfirmation"
@@ -81,7 +51,7 @@ const UserForm = ({ values, errors, touched, status }) => {
                     )}
                 <br />
                 <Button type="submit">Add Member</Button>
-            </Form>
+            </ClientForm>
 
             {users.map(
                 user => console.log("usersignup", user)
@@ -98,7 +68,7 @@ const UserForm = ({ values, errors, touched, status }) => {
                 //     </ul>
                 // )
             )}
-        </section>
+        </ClientSection>
     );
 };
 const FormikUserForm = withFormik({
