@@ -1,16 +1,16 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 
-import { InstructorClientChoice, Button } from "./Client/Styles";
+import { InstructorClientChoice, ChoiceButton } from "./Client/Styles";
 
 export default function InstructorClient() {
     return (
         <InstructorClientChoice>
             <NavLink to="/instructorlogin">
-                <Button>Instructor</Button>
+                <ChoiceButton>Instructor</ChoiceButton>
             </NavLink>
             <NavLink to="/clientlogin">
-                <Button>Client</Button>
+                <ChoiceButton>Client</ChoiceButton>
             </NavLink>
         </InstructorClientChoice>
     );
